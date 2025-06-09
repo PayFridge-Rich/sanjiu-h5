@@ -7,13 +7,13 @@
     <style>
         @font-face {
             font-family: 'SourceHanSansCN-Medium';
-            src: url('.vscode/Fonts/SourceHanSansCN-Medium.otf') format('opentype');
+            src: url('assets/Fonts/SourceHanSansCN-Medium.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
         }
         @font-face {
             font-family: 'YanShiXieHei';
-            src: url('.vscode/Fonts/演示斜黑体.otf') format('opentype');
+            src: url('assets/Fonts/演示斜黑体.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
         }
@@ -56,7 +56,7 @@
         }
         body {
             min-height: 100vh;
-            background: url(".vscode/img/背景.png") no-repeat center/cover;
+            background: url("assets/img/背景.png") no-repeat center/cover;
             overflow: hidden;
         }
         .container {
@@ -185,7 +185,7 @@
             left: 50%;
             transform: translateX(-50%);
             padding: 20px 35px;
-            background: url('.vscode/img/按钮_常态.png') no-repeat center/cover;
+            background: url('assets/img/按钮_常态.png') no-repeat center/cover;
             color: white;
             border: none;
             border-radius: 24px;
@@ -195,7 +195,7 @@
             position: relative;
         }
         .button:active { 
-            background: url('.vscode/img/按钮_按下.png') no-repeat center/cover;
+            background: url('assets/img/按钮_按下.png') no-repeat center/cover;
         }
         .flame {
             position: absolute;
@@ -226,7 +226,7 @@
 
         @font-face {
             font-family: 'DemoSlantedBlack';
-            src: url('.vscode/Fonts/演示斜黑体.otf') format('opentype');
+            src: url('assets/Fonts/演示斜黑体.otf') format('opentype');
         }
 
         .timer-img {
@@ -266,7 +266,7 @@
             justify-content: center;
         }
         .card-back {
-            background: #f0f0ef url(".vscode/img/三九胃泰牌养胃舒品牌logo.png") no-repeat center/70%;
+            background: #f0f0ef url("assets/img/三九胃泰牌养胃舒品牌logo.png") no-repeat center/70%;
             transform: rotateY(0deg);
         }
         .card-front {
@@ -321,7 +321,7 @@
             display: block;
             margin: 1.5rem auto 0;
             padding: 20px 60px;
-            background: url('.vscode/img/按钮_常态.png') no-repeat center/cover;
+            background: url('assets/img/按钮_常态.png') no-repeat center/cover;
             color: white;
             border: none;
             border-radius: 20px;
@@ -330,7 +330,7 @@
             transition: transform 0.2s;
         }
         .popup-btn:active {
-            background: url('.vscode/img/按钮_按下.png') no-repeat center/cover;
+            background: url('assets/img/按钮_按下.png') no-repeat center/cover;
         }
         @keyframes drop {
             to { top: 15vh; }
@@ -348,42 +348,42 @@
 <body>
         <!-- 加载页 -->
         <div id="loader">
-            <img src=".vscode/img/三九胃泰牌养胃舒品牌logo.png" alt="品牌logo" class="loader-logo">
+            <img src="assets/img/三九胃泰牌养胃舒品牌logo.png" alt="品牌logo" class="loader-logo">
             <div class="progress-bar">
                 <div class="progress" id="progress"></div>
             </div>
         </div>
     <div class="container" id="page1">
-        <img src=".vscode/img/人物_嘴馋状态.png" class="character" alt="嘴馋状态">
+        <img src="assets/img/人物_嘴馋状态.png" class="character" alt="嘴馋状态">
         <div class="dialog" id="dialog1">饿了~~~</div>
         <div class="dialog" id="dialog2">搞点东西吃吃吧~</div>
     </div>
 
     <div class="container" id="page1-1" style="display: none;">
-        <img src=".vscode/img/人物_嘴馋状态.png" class="character" alt="嘴馋状态">
+        <img src="assets/img/人物_嘴馋状态.png" class="character" alt="嘴馋状态">
     </div>
 
     <div class="container" id="page1-2" style="display: none;">
-        <img src=".vscode/img/人物_胃痛状态.png" class="character" alt="胃痛状态">
+        <img src="assets/img/人物_胃痛状态.png" class="character" alt="胃痛状态">
         <div class="dialog" id="dialog3">乱吃东西导致胃痛？</div>
         <button class="button" id="checkBtn">查看胃部状态</button>
     </div>
 
     <div class="container" id="page2" style="display: none;">
-        <img src=".vscode/img/人物_胃部透视.png" class="character">
-        <img src=".vscode/img/火苗.png" class="flame" alt="火苗">
+        <img src="assets/img/人物_胃部透视.png" class="character">
+        <img src="assets/img/火苗.png" class="flame" alt="火苗">
         <div class="dialog" id="dialog4">不良饮食习惯导致胃部不适</div>
         <button class="button" id="startGameBtn">冲袋养胃舒吧</button>
     </div>
 
     <div class="container" id="page2-1" style="display: none;">
-        <img src=".vscode/img/人物_持养胃舒.png" class="character" alt="持养胃舒人物">
+        <img src="assets/img/人物_持养胃舒.png" class="character" alt="持养胃舒人物">
         <button class="button" id="ruleBtn">看看游戏规则</button>
     </div>
 
     <!-- 规则弹窗 -->
     <div id="page3" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden" style="display: none;">
-        <img src=".vscode/img/人物_持养胃舒.png" class="character">
+        <img src="assets/img/人物_持养胃舒.png" class="character">
         <div class="popup">
             <h3 class="text-xl font-bold text-center mb-4">游戏规则</h3>
             <ul class="space-y-3 mb-6">
@@ -406,22 +406,22 @@
     </div>
 
     <div class="container" id="page4" style="display: none;">
-        <img src=".vscode/img/人物_持养胃舒.png" class="character">
-        <img src=".vscode/img/卡牌游戏_托盘.png" class="tray" alt="托盘">
-        <img src=".vscode/img/游戏_计时器.png" class="timer-img" alt="计时器">
+        <img src="assets/img/人物_持养胃舒.png" class="character">
+        <img src="assets/img/卡牌游戏_托盘.png" class="tray" alt="托盘">
+        <img src="assets/img/游戏_计时器.png" class="timer-img" alt="计时器">
         <div class="timer-text" id="timer">40</div>
         <div class="game-grid" id="gameGrid"></div>
     </div>
 
     <div class="container" id="page5" style="display: none;">
-        <img src=".vscode/img/人物_胃痛缓解.png" class="character" alt="胃痛缓解">
+        <img src="assets/img/人物_胃痛缓解.png" class="character" alt="胃痛缓解">
         <div class="dialog" id="dialog5">吃香喝辣
             "胃"你撑腰</div>
         <button class="button" id="replayBtn">我想再玩一次</button>
     </div>
 
     <div class="container" id="page6" style="display: none;">
-        <img src=".vscode/img/人物_开袋失败.png" class="character" alt="开袋失败人物">
+        <img src="assets/img/人物_开袋失败.png" class="character" alt="开袋失败人物">
         <div class="dialog" id="dialog6">啊啊
             撒了啦TAT</div>
         <button class="button" id="retryBtn">再打开一袋吧</button>
@@ -562,14 +562,14 @@
 
         function initGame() {
             const cardImages = [
-                '.vscode/img/卡片/党参.png',
-                '.vscode/img/卡片/北沙参.png',
-                '.vscode/img/卡片/山楂.png',
-                '.vscode/img/卡片/山药.png',
-                '.vscode/img/卡片/干姜.png',
-                '.vscode/img/卡片/白术.png',
-                '.vscode/img/卡片/陈皮.png',
-                '.vscode/img/卡片/黄精.png'
+                'assets/img/卡片/党参.png',
+                'assets/img/卡片/北沙参.png',
+                'assets/img/卡片/山楂.png',
+                'assets/img/卡片/山药.png',
+                'assets/img/卡片/干姜.png',
+                'assets/img/卡片/白术.png',
+                'assets/img/卡片/陈皮.png',
+                'assets/img/卡片/黄精.png'
             ];
             const allCards = [...cardImages, ...cardImages];
             allCards.sort(() => 0.5 - Math.random());
