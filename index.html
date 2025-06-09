@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, aspect-ratio=160/313">
+    <title>三九胃泰养胃舒互动H5</title>
+    <style>
+        @font-face {
+            font-family: 'SourceHanSansCN-Medium';
+            src: url('.vscode/Fonts/SourceHanSansCN-Medium.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'YanShiXieHei';
+            src: url('.vscode/Fonts/演示斜黑体.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SourceHanSansCN-Medium', sans-serif;
+        }
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f0f0ef;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .loader-logo {
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            width: 80%;
+            max-width: 400px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #11458c;
+            transition: width 0.3s ease;
+        }
+        body {
+            min-height: 100vh;
+            background: url(".vscode/img/背景.png") no-repeat center/cover;
+            overflow: hidden;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100vh;
+        }
+        .character {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100vh;
+            object-fit: contain;
+            filter: drop-shadow(0 -2px 10px rgba(0, 0, 0, 0.178));
+        }
+        #dialog5 {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            color: #d24b4b;
+            font-family: 'YanShiXieHei', sans-serif;
+            font-size: 48px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow:
+            1px 0 0 white,
+            -1px 0 0 white,
+            0 1px 0 white,
+            0 -1px 0 white,
+            2px 0 0 white,
+            -2px 0 0 white,
+            0 2px 0 white,
+            0 -2px 0 white,
+            3px 0 0 white,
+            -3px 0 0 white,
+            0 3px 0 white,
+            0 -3px 0 white,
+            4px 0 0 white,
+            -4px 0 0 white,
+            0 4px 0 white,
+            0 -4px 0 white,
+            5px 0 0 white,
+            -5px 0 0 white,
+            0 5px 0 white,
+            0 -5px 0 white;
+            transform: translateX(-50%) rotate(-12deg);
+        }
+        #dialog6 {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            color: #d24b4b;
+            font-family: 'YanShiXieHei', sans-serif;
+            font-size: 48px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow:
+            1px 0 0 white,
+            -1px 0 0 white,
+            0 1px 0 white,
+            0 -1px 0 white,
+            2px 0 0 white,
+            -2px 0 0 white,
+            0 2px 0 white,
+            0 -2px 0 white,
+            3px 0 0 white,
+            -3px 0 0 white,
+            0 3px 0 white,
+            0 -3px 0 white,
+            4px 0 0 white,
+            -4px 0 0 white,
+            0 4px 0 white,
+            0 -4px 0 white,
+            5px 0 0 white,
+            -5px 0 0 white,
+            0 5px 0 white,
+            0 -5px 0 white;
+            transform: translateX(-50%) rotate(-12deg);
+        }
+        .dialog {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ffffffcc 0%, #ffffffcc 100%);
+            padding: 10px 20px;
+            border-radius: 17px;
+            animation: drop 0.3s forwards;
+            min-width: 100px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* 对话框阴影 */
+        }
+        .bubble {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            animation: shake 1s infinite;
+            cursor: pointer;
+        }
+            .bubble:hover {
+                transform: translateX(-50%) scale(1.05);
+                background: rgba(255, 255, 255, 0.664);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            }
+            .bubble {
+                box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+                transition: all 0.3s;
+            }
+            .bubble-1 { width: 80px; height: 80px; animation: shake 0.8s infinite; }
+            .bubble-2 { width: 90px; height: 90px; animation: shake 1s infinite; }
+            .bubble-3 { width: 70px; height: 70px; animation: shake 1.2s infinite; }
+        .button {
+            position: absolute;
+            bottom: -80vh;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 20px 35px;
+            background: url('.vscode/img/按钮_常态.png') no-repeat center/cover;
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .button:active { 
+            background: url('.vscode/img/按钮_按下.png') no-repeat center/cover;
+        }
+        .flame {
+            position: absolute;
+            top: 52%;
+            left: 52%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            animation: flame 1.5s infinite;
+        }
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 20vh auto 0;
+        }
+        .tray {
+            position: absolute;
+            top: 43.5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%;
+            height: auto;
+            filter: drop-shadow(0 -2px 10px rgba(0, 0, 0, 0.16));
+            z-index: 0;
+        }
+
+        @font-face {
+            font-family: 'DemoSlantedBlack';
+            src: url('.vscode/Fonts/演示斜黑体.otf') format('opentype');
+        }
+
+        .timer-img {
+            position: absolute;
+            top: 15.5%;
+            left: 12%; /* 与托盘左对齐（70%宽度的托盘左边缘为15%） */
+            width: 20%;
+            z-index: 1;
+        }
+
+        .timer-text {
+            position: absolute;
+            top: 14.9%;
+            left: 22.5%; /* 计时器图片中心位置 */
+            transform: translateX(-50%);
+            font-family: 'DemoSlantedBlack';
+            color: white;
+            font-size: 32px;
+            z-index: 2;
+        }
+        .card {
+            aspect-ratio: 1/1;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-back {
+            background: #f0f0ef url(".vscode/img/三九胃泰牌养胃舒品牌logo.png") no-repeat center/70%;
+            transform: rotateY(0deg);
+        }
+        .card-front {
+            background: #f0f0ef;
+            transform: rotateY(180deg);
+            background-size: 80%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .flipped {
+            transform: rotateY(180deg);
+        }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #ffffff 90%, #fff5f5 100%); /* 柔和渐变背景 */
+            padding: 2rem 2.5rem;
+            border-radius: 24px; /* 更大圆角 */
+            box-shadow: 0 8px 24px rgba(210, 75, 75, 0.15); /* 红色调柔和阴影 */
+            text-align: center;
+            max-width: 28rem;
+            width: calc(100% - 2rem);
+            margin: 0 1rem;
+            font-family: 'SourceHanSansCN-Medium', sans-serif; /* 使用项目字体 */
+        }
+        .popup h3 {
+            color: #d24b4b;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+        }
+        .popup ul {
+            text-align: left;
+            margin: 0 1rem;
+        }
+        .popup li {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .popup li i {
+            color: #d24b4b;
+            margin-right: 0.6rem;
+            font-size: 1.1rem;
+            margin-top: 0.2rem;
+        }
+        .popup-btn {
+            display: block;
+            margin: 1.5rem auto 0;
+            padding: 20px 60px;
+            background: url('.vscode/img/按钮_常态.png') no-repeat center/cover;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .popup-btn:active {
+            background: url('.vscode/img/按钮_按下.png') no-repeat center/cover;
+        }
+        @keyframes drop {
+            to { top: 15vh; }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes flame {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+        <!-- 加载页 -->
+        <div id="loader">
+            <img src=".vscode/img/三九胃泰牌养胃舒品牌logo.png" alt="品牌logo" class="loader-logo">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+    <div class="container" id="page1">
+        <img src=".vscode/img/人物_嘴馋状态.png" class="character" alt="嘴馋状态">
+        <div class="dialog" id="dialog1">饿了~~~</div>
+        <div class="dialog" id="dialog2">搞点东西吃吃吧~</div>
+    </div>
+
+    <div class="container" id="page1-1" style="display: none;">
+        <img src=".vscode/img/人物_嘴馋状态.png" class="character" alt="嘴馋状态">
+    </div>
+
+    <div class="container" id="page1-2" style="display: none;">
+        <img src=".vscode/img/人物_胃痛状态.png" class="character" alt="胃痛状态">
+        <div class="dialog" id="dialog3">乱吃东西导致胃痛？</div>
+        <button class="button" id="checkBtn">查看胃部状态</button>
+    </div>
+
+    <div class="container" id="page2" style="display: none;">
+        <img src=".vscode/img/人物_胃部透视.png" class="character">
+        <img src=".vscode/img/火苗.png" class="flame" alt="火苗">
+        <div class="dialog" id="dialog4">不良饮食习惯导致胃部不适</div>
+        <button class="button" id="startGameBtn">冲袋养胃舒吧</button>
+    </div>
+
+    <div class="container" id="page2-1" style="display: none;">
+        <img src=".vscode/img/人物_持养胃舒.png" class="character" alt="持养胃舒人物">
+        <button class="button" id="ruleBtn">看看游戏规则</button>
+    </div>
+
+    <!-- 规则弹窗 -->
+    <div id="page3" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden" style="display: none;">
+        <img src=".vscode/img/人物_持养胃舒.png" class="character">
+        <div class="popup">
+            <h3 class="text-xl font-bold text-center mb-4">游戏规则</h3>
+            <ul class="space-y-3 mb-6">
+                <li class="flex items-start">
+                    <span>翻牌找出所有匹配的图案</span>
+                </li>
+                <li class="flex items-start">
+                    <span>每次可以翻两张牌</span>
+                </li>
+                <li class="flex items-start">
+                    <span>如果两张牌匹配，它们会保持翻开状态</span>
+                </li>
+                    <span>成功配对所有卡片即可消除胃部不适</span>
+                </li>
+            </ul>
+            <button id="startBtn" class="popup-btn">
+                我知道啦
+            </button>
+        </div>
+    </div>
+
+    <div class="container" id="page4" style="display: none;">
+        <img src=".vscode/img/人物_持养胃舒.png" class="character">
+        <img src=".vscode/img/卡牌游戏_托盘.png" class="tray" alt="托盘">
+        <img src=".vscode/img/游戏_计时器.png" class="timer-img" alt="计时器">
+        <div class="timer-text" id="timer">40</div>
+        <div class="game-grid" id="gameGrid"></div>
+    </div>
+
+    <div class="container" id="page5" style="display: none;">
+        <img src=".vscode/img/人物_胃痛缓解.png" class="character" alt="胃痛缓解">
+        <div class="dialog" id="dialog5">吃香喝辣
+            "胃"你撑腰</div>
+        <button class="button" id="replayBtn">我想再玩一次</button>
+    </div>
+
+    <div class="container" id="page6" style="display: none;">
+        <img src=".vscode/img/人物_开袋失败.png" class="character" alt="开袋失败人物">
+        <div class="dialog" id="dialog6">啊啊
+            撒了啦TAT</div>
+        <button class="button" id="retryBtn">再打开一袋吧</button>
+    </div>
+
+    <script>
+        // 加载页逻辑
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('loader');
+            const progress = document.getElementById('progress');
+            let currentProgress = 0;
+
+            const simulateLoading = () => {
+                const interval = setInterval(() => {
+                    currentProgress += Math.random() * 20;
+                    if (currentProgress >= 100) {
+                        currentProgress = 100;
+                        clearInterval(interval);
+                        loader.style.display = 'none';
+                        showPage('page1');
+                        showPage1Dialogs(); // 加载完成后触发对话框显示
+                    }
+                    progress.style.width = `${currentProgress}%`;
+                }, 200);
+            };
+
+            simulateLoading();
+        });
+
+        // 页面切换控制
+        const pages = {
+            page1: document.getElementById('page1'),
+            'page1-1': document.getElementById('page1-1'),
+            'page1-2': document.getElementById('page1-2'),
+            page2: document.getElementById('page2'),
+            'page2-1': document.getElementById('page2-1'),
+            page3: document.getElementById('page3'),
+            page4: document.getElementById('page4'),
+            page5: document.getElementById('page5'),
+            page6: document.getElementById('page6')
+        };
+
+        function showPage(pageName) {
+            Object.values(pages).forEach(p => p.style.display = 'none');
+            pages[pageName].style.display = 'block';
+        }
+
+        // Page1 对话框顺序显示逻辑（移至加载页完成后执行）
+        function showPage1Dialogs() {
+            const dialog1 = document.getElementById('dialog1');
+            const dialog2 = document.getElementById('dialog2');
+            dialog1.style.display = 'none';
+            dialog2.style.display = 'none';
+
+            // 第一个对话框显示
+            setTimeout(() => {
+                dialog1.style.display = 'block';
+                dialog1.style.left = '50%';
+                dialog1.style.animation = 'drop 0.5s forwards';
+                // 2秒后消失
+                setTimeout(() => {
+                    dialog1.style.display = 'none';
+                    // 第二个对话框显示
+                    setTimeout(() => {
+                        dialog2.style.display = 'block';
+                        dialog2.style.left = '50%';
+                        dialog2.style.animation = 'drop 0.5s forwards';
+                        // 2秒后消失并进入下一页
+                        setTimeout(() => {
+                            dialog2.style.display = 'none';
+                            showPage('page1-1');
+                        }, 2000);
+                    }, 100);
+                }, 1500);
+            }, 100);
+        }
+
+        // Page1-1 气泡交互
+        const bubblePositions = [
+            { top: '20%', left: '15%' },
+            { top: '10%', left: '30%' },
+            { top: '12%', left: '53%' }
+        ];
+        const foods = ['🍔', '🌶️', '🧋'];
+        let popped = 0;
+
+        bubblePositions.forEach((pos, i) => {
+            const bubble = document.createElement('div');
+            bubble.className = `bubble bubble-${i+1}`; // 应用不同尺寸和动画的类
+            bubble.style.top = pos.top;
+            bubble.style.left = pos.left;
+            bubble.textContent = foods[i];
+            bubble.addEventListener('click', () => {
+                bubble.style.animation = 'none';
+                bubble.style.transform = 'scale(0)';
+                popped++;
+                if (popped === 3) {
+                    setTimeout(() => showPage('page1-2'), 500);
+                }
+            });
+            pages['page1-1'].appendChild(bubble);
+        });
+
+        // Page1-2 按钮点击
+        document.getElementById('checkBtn').addEventListener('click', () => {
+            document.getElementById('dialog3').style.display = 'none';
+            showPage('page2');
+        });
+
+        // Page2 按钮点击
+        document.getElementById('startGameBtn').addEventListener('click', () => showPage('page2-1'));
+
+        // Page2-1 规则按钮点击
+        document.getElementById('ruleBtn').addEventListener('click', () => showPage('page3'));
+
+        // Page3 开始游戏
+        document.getElementById('startBtn').addEventListener('click', () => {
+            showPage('page4');
+            initGame();
+        });
+
+        // 游戏初始化
+        let timerInterval;
+
+        function startTimer() {
+            let timeLeft = 40;
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = timeLeft;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showPage('page6');
+                }
+            }, 1000);
+        }
+
+        function initGame() {
+            const cardImages = [
+                '.vscode/img/卡片/党参.png',
+                '.vscode/img/卡片/北沙参.png',
+                '.vscode/img/卡片/山楂.png',
+                '.vscode/img/卡片/山药.png',
+                '.vscode/img/卡片/干姜.png',
+                '.vscode/img/卡片/白术.png',
+                '.vscode/img/卡片/陈皮.png',
+                '.vscode/img/卡片/黄精.png'
+            ];
+            const allCards = [...cardImages, ...cardImages];
+            allCards.sort(() => 0.5 - Math.random());
+
+            const gameGrid = document.getElementById('gameGrid');
+            gameGrid.innerHTML = '';
+
+            let flippedCards = [];
+            let lockBoard = false;
+
+            allCards.forEach(img => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-back"></div>
+                    <div class="card-front" style="background-image: url('${img}')"></div>
+                `;
+
+                card.addEventListener('click', () => {
+                    if (lockBoard || flippedCards.includes(card) || card.classList.contains('flipped')) return;
+                    card.classList.add('flipped');
+                    flippedCards.push(card);
+
+                    if (flippedCards.length === 2) {
+                        lockBoard = true;
+                        checkMatch();
+                    }
+                });
+                gameGrid.appendChild(card);
+            });
+
+            // 展示所有卡面3秒
+            Array.from(gameGrid.children).forEach(card => card.classList.add('flipped'));
+            lockBoard = true; // 锁定棋盘防止点击
+            setTimeout(() => {
+                Array.from(gameGrid.children).forEach(card => card.classList.remove('flipped'));
+                lockBoard = false;
+                startTimer(); // 3秒展示结束后启动倒计时
+            }, 3000);
+
+            function checkMatch() {
+                const [card1, card2] = flippedCards;
+                const img1 = card1.querySelector('.card-front').style.backgroundImage;
+                const img2 = card2.querySelector('.card-front').style.backgroundImage;
+
+                if (img1 === img2) {
+                    flippedCards = [];
+                    lockBoard = false;
+                    checkWin();
+                } else {
+                    setTimeout(() => {
+                        card1.classList.remove('flipped');
+                        card2.classList.remove('flipped');
+                        flippedCards = [];
+                        lockBoard = false;
+                    }, 1000);
+                }
+            }
+
+            function checkWin() {
+                const allFlipped = Array.from(gameGrid.children).every(c => c.classList.contains('flipped'));
+                if (allFlipped) {
+                    clearInterval(timerInterval); // 关键修复：胜利时停止计时
+                    setTimeout(() => showPage('page5'), 1000);
+                }
+            }
+        }
+
+        // Page5 再玩一次
+        document.getElementById('replayBtn').addEventListener('click', () => showPage('page3'));
+
+        document.getElementById('retryBtn').addEventListener('click', () => {
+            clearInterval(timerInterval);
+            showPage('page3');
+        });
+    </script>
+</body>
+</html>
